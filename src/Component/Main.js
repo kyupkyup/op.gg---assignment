@@ -5,3 +5,16 @@
                       -> WinRate
                       -> WinRateMini
 */
+
+import React from "react";
+import styled from "styled-components";
+// import Summoner from "./Summoner";
+// import
+
+const Container = styled.div``;
+
+const Main = (summoner_info) => {
+  return <Container></Container>;
+};
+
+export default Main;

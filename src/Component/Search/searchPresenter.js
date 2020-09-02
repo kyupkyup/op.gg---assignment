@@ -10,17 +10,24 @@ import SearchInput from "./searchInput";
 const Container = styled.div``;
 const Header = styled.div``;
 
-export default ({ searchWord, searchListState, setSearchListState }) => {
+export default ({
+  clickSearch,
+  searchWord,
+  type_search_word,
+  summoner_info,
+  searchListState,
+  setSearchListState,
+}) => {
   // Main 컴포넌트로 summoner 객체 전달
   return (
     <Container>
       {/* 서치 부분 구현 */}
       <Header>
-        <SearchInput />
-        <SearchList searchListState={searchListState} searchWord={searchWord} />
+        <SearchInput onKeyPress={clickSearch} onChange={type_search_word} />
+        {/* <SearchList searchListState={searchListState} searchWord={searchWord} /> */}
       </Header>
       {/* 하위 컴포넌트  */}
-      <Main />
+      <Main summoner_info={summoner_info} />
     </Container>
   );
 };

@@ -6,3 +6,11 @@
 // 모델 - 소환사 most info api fetch
 //        -> 전달 변수 : 소환사 이름
 //
+import React from "react";
+
+import WinRatePresenter from "./winRatePresenter";
+const WinRateContainer = () => {
+  return <WinRatePresenter></WinRatePresenter>;
+};
+
+export default WinRateContainer;
