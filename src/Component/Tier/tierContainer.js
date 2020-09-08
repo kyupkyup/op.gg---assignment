@@ -3,10 +3,11 @@
 
 import React from "react";
 import propTypes from "prop-types";
+import styled from "styled-components";
+import TierBridge from "./tierBridge";
 
-import TierPresenter from "./tierPresenter";
-const TierContainer = () => {
-  return <TierPresenter></TierPresenter>;
+const TierContainer = ({ leagues }) => {
+  return <TierBridge leagues={leagues} />;
 };
 
 export default TierContainer;

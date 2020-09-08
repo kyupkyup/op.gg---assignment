@@ -6,11 +6,49 @@
 // 모델 - 소환사 most info api fetch
 //        -> 전달 변수 : 소환사 이름
 //
-import React from "react";
+import React, { useState } from "react";
 
 import WinRatePresenter from "./winRatePresenter";
-const WinRateContainer = () => {
-  return <WinRatePresenter></WinRatePresenter>;
+import { mostFetch } from "./winRateQueries";
+
+const WinRateContainer = ({ name }) => {
+  const [tab, setTab] = useState("champion");
+  const [newName, setNewName] = useState("");
+  const [loading, setLoading] = useState(false);
+  /**
+   * 탭 상태 관리 변수
+   * default : champion => 챔피언 승률
+   * sevenDays : sevenDays => 7일간 랭크 승률
+   */
+  const [mostInfo, setMostInfo] = useState("");
+
+  /*
+   * 쿼리문에서 받아온 데이터 저장
+   */
+  const mostQuery = (name) => {
+    mostFetch(name).then((most) => {
+      setMostInfo(most);
+      setNewName(name);
+      if (loading === false) {
+        setLoading(true);
+      }
+    });
+  };
+  if (name !== newName || mostInfo === "") {
+    /**
+     * 새로 들어온 닉네임과 기존에 보여주고 있던 닉네임이 다를경우 ( 새로운 검색어를 입력한 경우 )
+     * mostInfo가 비어있는 경우( 맨 처음 검색을 시작한 경우 )
+     */
+    mostQuery(name);
+  }
+  return (
+    <WinRatePresenter
+      mostInfo={mostInfo}
+      tab={tab}
+      setTab={setTab}
+      loading={loading}
+    />
+  );
 };
 
 export default WinRateContainer;

@@ -7,3 +7,26 @@
  */
 // 전달 변수 : 소환사 이름
 //
+
+import React from "react";
+import SearchListPresenter from "./searchListPresenter";
+
+const SearchListContainer = ({
+  searchListState,
+  searchWord,
+  listClick,
+  listClickSearch,
+}) => {
+  let localSearchWords = JSON.parse(localStorage.getItem("search")) || [];
+  return (
+    <SearchListPresenter
+      searchListState={searchListState}
+      searchWord={searchWord}
+      listClick={listClick}
+      localSearchWords={localSearchWords}
+      listClickSearch={listClickSearch}
+    />
+  );
+};
+
+export default SearchListContainer;

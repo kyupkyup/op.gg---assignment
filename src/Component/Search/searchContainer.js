@@ -25,14 +25,14 @@ import useInput from "../../utils/useInput";
 import { search, relatedSearchList } from "./searchQueries";
 
 const SearchContainer = () => {
-  const [searchListState, setSearchListState] = useState();
+  const [searchListState, setSearchListState] = useState("none#!");
   /*
    * 검색어 리스트 show 변수
    * default : "none#!"
    * 빈 검색어 일 경우 : "empty#!"
    * 검색어가 입력 될 경우 : "{검색어 값}"
    */
-  const [summoner_info, setSummoner_info] = useState("");
+  const [summoner_info, setSummoner_info] = useState("default");
   /**
    * 검색어 상태 입력 (최종 검색어)
    */
@@ -41,8 +41,15 @@ const SearchContainer = () => {
    * 실제 검색어 값 저장 변수
    *
    */
+  const [listClick, setListClick] = useState(false);
+  const clickInput = (e) => {
+    if (listClick === false) {
+      setListClick(true);
+    }
+  };
   const type_search_word = (e) => {
     searchWord.setValue(e.target.value);
+    setListClick(false);
     relatedSearchList(e.target.value).then((user) => {
       setSearchListState(user);
     });
@@ -51,11 +58,34 @@ const SearchContainer = () => {
    * 검색 시 타이핑 마다 api 호출을 통해 관련 검색어를 불러옴
    */
   const clickSearch = (e) => {
-    if (e.keyCode === 0) {
+    if (e.key === "Enter") {
       search(searchWord.value).then((user) => {
         setSummoner_info(user);
+        if (localStorage.length > 11) {
+          localStorage.setItem(
+            "search",
+            JSON.stringify([
+              ...JSON.parse(localStorage.getItem("search")).pop(),
+              searchWord.value,
+            ])
+          );
+        } else {
+          localStorage.setItem(
+            "search",
+            JSON.stringify([
+              ...JSON.parse(localStorage.getItem("search")),
+              searchWord.value,
+            ])
+          );
+        }
       });
     }
+  };
+  const listClickSearch = (word) => {
+    search(word).then((user) => {
+      setSummoner_info(user);
+      setListClick(false);
+    });
   };
   /**
    * search에서 엔터 클릭 시 검색 실행
@@ -70,6 +100,9 @@ const SearchContainer = () => {
       searchWord={searchWord}
       searchListState={searchListState}
       setSearchListState={setSearchListState}
+      clickInput={clickInput}
+      listClick={listClick}
+      listClickSearch={listClickSearch}
     />
   );
 };

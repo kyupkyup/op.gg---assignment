@@ -5,8 +5,22 @@
 import React from "react";
 
 import SummonerPresenter from "./summonerPresenter";
-const SummonerContainer = () => {
-  return <SummonerPresenter></SummonerPresenter>;
+const SummonerContainer = ({
+  previousTiers,
+  name,
+  ladderRank,
+  profileImageUrl,
+  level,
+}) => {
+  return (
+    <SummonerPresenter
+      previousTiers={previousTiers}
+      name={name}
+      ladderRank={ladderRank}
+      profileImageUrl={profileImageUrl}
+      level={level}
+    />
+  );
 };
 
 export default SummonerContainer;

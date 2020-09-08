@@ -8,7 +8,27 @@ import SearchList from "../SearchList";
 import SearchInput from "./searchInput";
 
 const Container = styled.div``;
-const Header = styled.div``;
+const HeaderContainer = styled.div`
+  display: flex;
+  width: 100%;
+  background-color: #1ea1f7;
+  justify-content: center;
+`;
+const Header = styled.div`
+  width: 1200px;
+  height: 97px;
+`;
+const SearchContainer = styled.div`
+  width: 300px;
+  height: auto;
+  float: right;
+  margin-top: 53px;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 export default ({
   clickSearch,
@@ -17,17 +37,35 @@ export default ({
   summoner_info,
   searchListState,
   setSearchListState,
+  clickInput,
+  listClick,
+  listClickSearch,
 }) => {
   // Main 컴포넌트로 summoner 객체 전달
   return (
     <Container>
       {/* 서치 부분 구현 */}
-      <Header>
-        <SearchInput onKeyPress={clickSearch} onChange={type_search_word} />
-        {/* <SearchList searchListState={searchListState} searchWord={searchWord} /> */}
-      </Header>
+      <HeaderContainer>
+        <Header>
+          <SearchContainer>
+            <SearchInput
+              onKeyPress={clickSearch}
+              onChange={type_search_word}
+              onClick={() => clickInput()}
+            ></SearchInput>
+            <SearchList
+              searchListState={searchListState}
+              searchWord={searchWord}
+              listClick={listClick}
+              listClickSearch={listClickSearch}
+            />
+          </SearchContainer>{" "}
+        </Header>
+      </HeaderContainer>
       {/* 하위 컴포넌트  */}
-      <Main summoner_info={summoner_info} />
+      <MainContainer>
+        <Main summoner_info={summoner_info} />
+      </MainContainer>
     </Container>
   );
 };
